@@ -9,12 +9,17 @@ form.onsubmit = (event)=>{
 
     let professionalGithub = document.getElementById('github').value;
 
+    let professionalTechnology = document.getElementById('technology').value;
+
     // Configurando o fetch (para criar um novo objeto no JS, coloc0 {})
     let config = {
-        // informando que o método será post
+        headers:{
+            "Content-Type":"application/json"
+        },
+        // informando que o método será post (o fetch por padrão usa o método get)
         method: "post",
-        // convertendo as infos do body para json
-        body: JSON.stringify({name:professionalName, github:professionalGithub})
+        // convertendo as infos do body para json dentro das chaves - name do input:valores do input
+        body: JSON.stringify({name:professionalName, github:professionalGithub, technology:professionalTechnology})
     }
     // No fetch, eu passo como parâmetro as configurações que fiz acima
     fetch('http://localhost:8000/api/profissionais',config)
@@ -22,6 +27,9 @@ form.onsubmit = (event)=>{
         return resposta.json();
     }).then(function(json){
         console.log(json);
+    }).catch(function(erro){
+        console.log(erro);
     })
+    // O catch é para exibir o erro da aplicação
 
 }
