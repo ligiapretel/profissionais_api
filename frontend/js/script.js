@@ -4,7 +4,7 @@ form.onsubmit = (event)=>{
 // Para não deixar a página atualizar quando envio o form, coloco uma função chamada preventDefault, que não deixa a página ser atualizada    
     event.preventDefault();
 
-    // para pegar os dados que estão sendo enviados no IDBOpenDBRequest, uso o value.
+    // para pegar os dados que estão sendo enviados no input, uso o value.
     let professionalName = document.getElementById('name').value;
 
     let professionalGithub = document.getElementById('github').value;
@@ -22,6 +22,8 @@ form.onsubmit = (event)=>{
         body: JSON.stringify({name:professionalName, github:professionalGithub, technology:professionalTechnology})
     }
     // No fetch, eu passo como parâmetro as configurações que fiz acima
+    // No primeiro then, recebo a resposta completa (os dados que o servidor processou)
+    // O segundo then é para poder trabalhar com essas informações de fato, pegar o conteúdo da resposta
     fetch('http://localhost:8000/api/profissionais',config)
     .then(function(resposta){
         return resposta.json();
@@ -31,5 +33,7 @@ form.onsubmit = (event)=>{
         console.log(erro);
     })
     // O catch é para exibir o erro da aplicação
+
+    //.finally() - usado em casos de barra de load, ou seja, quando a aplicação termina de carregar, encerro o load no finally. É executado ao final de tudo, depois do then e do catch. 
 
 }
